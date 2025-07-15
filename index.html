@@ -41,9 +41,32 @@
         ul {
             padding-left: 20px;
         }
+        .highlight-box {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
+
+    <!-- SCRIPT TO DEFINE THE EMAIL IN ONE PLACE -->
+    <script>
+        // *** EDIT THIS LINE TO CHANGE THE EMAIL EVERYWHERE ***
+        const supportEmail = "instilknowledge@gmail.com";
+
+        // This function will run once the document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all elements that need the email address and update them
+            const emailElements = document.querySelectorAll('.support-email');
+            emailElements.forEach(function(element) {
+                element.textContent = supportEmail;
+            });
+        });
+    </script>
+
     <div class="container">
         <!-- English Section -->
         <h1>Privacy Policy for ParoBible</h1>
@@ -100,12 +123,16 @@
         </ul>
         <p>To exercise any of these rights, please contact us at the email address provided below.</p>
 
-        <!-- NEW SECTION: Data Deletion Request -->
         <div id="data-deletion" class="highlight-box">
             <h2>Data Deletion Request</h2>
-            <p>You have the right to request the deletion of your account and all associated data at any time. To do so, please send an email with the subject "Account Deletion Request" to the contact address in section </p>
-            <p><strong>9. Contact Us</strong></p>
-            <p>Please send the request from the email address associated with your ParoBible account to facilitate verification. We will process your request and confirm the deletion of your data within 30 days.</p>
+            <p>You have the right to request the deletion of your data at any time. This can be done in part or in whole.</p>
+            <ul>
+                <li><strong>Partial Deletion:</strong> You can delete individual data, such as personal notes, directly within the application. You may also request the deletion of entire categories of data (e.g., all notes, all quiz history) without deleting your account.</li>
+                <li><strong>Full Account Deletion:</strong> You can request the deletion of your entire account and all associated data.</li>
+            </ul>
+            <p>To submit a request for partial category deletion or full account deletion, please send an email with a clear subject (e.g., "Account Deletion Request") to the following address:</p>
+            <p><strong><span class="support-email"></span></strong></p>
+            <p>Please send the request from the email address associated with your ParoBible account to facilitate verification. We will process your request and confirm the action taken within 30 days.</p>
         </div>
 
         <h2>7. Children's Privacy</h2>
@@ -113,9 +140,9 @@
 
         <h2>8. Changes to This Privacy Policy</h2>
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy within the application. You are advised to review this Privacy Policy periodically for any changes.</p>
-
+        
         <h2>9. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us at: <strong>instilknowledge@gmail.com</strong></p>
+        <p>If you have any questions about this Privacy Policy, please contact us at: <strong><span class="support-email"></span></strong></p>
 
         <hr style="margin: 40px 0;">
 
@@ -174,12 +201,16 @@
         </ul>
         <p>Pour exercer l'un de ces droits, veuillez nous contacter à l'adresse e-mail fournie ci-dessous.</p>
 
-        <!-- NOUVELLE SECTION : Demande de Suppression de Données -->
         <div class="highlight-box">
             <h2>Demande de Suppression de Données</h2>
-            <p>Vous avez le droit de demander à tout moment la suppression de votre compte et de toutes les données associées. Pour ce faire, veuillez envoyer un e-mail ayant pour objet "Demande de Suppression de Compte" à l'adresse indiqée à la section </p>
-            <p><strong>9. Nous Contacter</strong></p>
-            <p>Veuillez envoyer la demande depuis l'adresse e-mail associée à votre compte ParoBible pour faciliter la vérification. Nous traiterons votre demande et confirmerons la suppression de vos données dans un délai de 30 jours.</p>
+            <p>Vous avez le droit de demander à tout moment la suppression de vos données. Cette suppression peut être partielle ou totale.</p>
+            <ul>
+                <li><strong>Suppression Partielle :</strong> Vous pouvez supprimer des données individuelles, comme des notes personnelles, directement dans l'application. Vous pouvez également demander la suppression de catégories entières de données (par ex., toutes vos notes, tout votre historique de quiz) sans pour autant supprimer votre compte.</li>
+                <li><strong>Suppression Complète du Compte :</strong> Vous pouvez demander la suppression de l'intégralité de votre compte et de toutes les données associées.</li>
+            </ul>
+            <p>Pour soumettre une demande de suppression de catégorie ou de suppression complète du compte, veuillez envoyer un e-mail avec un objet clair (par ex., "Demande de Suppression de Compte") à l'adresse suivante :</p>
+            <p><strong><span class="support-email"></span></strong></p>
+            <p>Veuillez envoyer la demande depuis l'adresse e-mail associée à votre compte ParoBible pour faciliter la vérification. Nous traiterons votre demande et confirmerons l'action effectuée dans un délai de 30 jours.</p>
         </div>
         
         <h2>7. Confidentialité des Enfants</h2>
@@ -189,7 +220,7 @@
         <p>Nous pouvons mettre à jour notre Politique de Confidentialité de temps à autre. Nous vous informerons de tout changement en publiant la nouvelle Politique de Confidentialité dans l'application. Il vous est conseillé de consulter périodiquement cette Politique de Confidentialité pour tout changement.</p>
         
         <h2>9. Nous Contacter</h2>
-        <p>Si vous avez des questions sur cette Politique de Confidentialité, veuillez nous contacter à : <strong>instilknowledge@gmail.com</strong></p>
+        <p>Si vous avez des questions sur cette Politique de Confidentialité, veuillez nous contacter à : <strong><span class="support-email"></span></strong></p>
     </div>
 </body>
 </html>
