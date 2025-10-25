@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correo Verificado - ParoBible</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        /* ✅ Logo styling */
+        .app-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            display: block;
+        }
+        
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        
+        .features li {
+            margin: 10px 0;
+            color: #666;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .button-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 10px 30px;
+            font-size: 14px;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .app-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+            
+            .button {
+                padding: 12px 30px;
+                font-size: 16px;
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ✅ ParoBible Logo -->
+        <img 
+            src="https://instiledge.github.io/privacy-policy-parobible/parobible-logo.png" 
+            alt="Logo de ParoBible" 
+            class="app-logo"
+            onerror="this.style.display='none'"
+        >
+        
+        <!-- Success Icon -->
+        <div class="icon">✅</div>
+        
+        <!-- Heading -->
+        <h1>¡Correo Verificado!</h1>
+        <h2>Bienvenido a ParoBible</h2>
+        
+        <!-- Description -->
+        <p>
+            Tu dirección de correo electrónico ha sido verificada exitosamente. 
+            Ahora puedes acceder a todas las funciones de ParoBible.
+        </p>
+        
+        <!-- Features List -->
+        <ul class="features">
+            <li>📖 Biblia en 7 idiomas</li>
+            <li>🎵 Audio Biblia con TTS</li>
+            <li>📝 Notas de reflexión personales</li>
+            <li>🙏 Oraciones y devociones diarias</li>
+            <li>❓ Cuestionarios bíblicos interactivos</li>
+            <li>📚 Biblioteca de libros espirituales</li>
+        </ul>
+        
+        <!-- Call to Action -->
+        <a href="parobible://open" class="button">Abrir la App ParoBible</a>
+        
+        <!-- App Store Links -->
+        <div style="margin-top: 30px;">
+            <p style="font-size: 14px; color: #999; margin-bottom: 15px;">
+                ¿Aún no tienes la aplicación?
+            </p>
+            <a href="https://apps.apple.com/app/parobible" class="button button-secondary">
+                📱 Descargar en iOS
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button button-secondary">
+                🤖 Descargar en Android
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                ¿Necesitas ayuda? Contáctanos en 
+                <a href="mailto:contact.parobible@gmail.com">contact.parobible@gmail.com</a>
+            </p>
+            <p style="margin-top: 10px;">
+                <a href="https://instiledge.github.io/privacy-policy-parobible/">Política de Privacidad</a>
+            </p>
+            <p style="margin-top: 5px; font-size: 12px;">
+                © 2025 ParoBible. Todos los derechos reservados.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
