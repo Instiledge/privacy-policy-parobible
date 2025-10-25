@@ -31,8 +31,18 @@
             text-align: center;
         }
         
+        /* ✅ Logo styling */
+        .app-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            display: block;
+        }
+        
         .icon {
-            font-size: 80px;
+            font-size: 60px;
             margin-bottom: 20px;
             animation: bounce 1s ease infinite;
         }
@@ -61,6 +71,17 @@
             margin-bottom: 30px;
         }
         
+        .features {
+            text-align: left;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        
+        .features li {
+            margin: 10px 0;
+            color: #666;
+        }
+        
         .button {
             display: inline-block;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -79,12 +100,12 @@
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
         
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            margin: 20px auto;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .button-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 10px 30px;
+            font-size: 14px;
         }
         
         .footer {
@@ -106,6 +127,11 @@
                 padding: 30px 20px;
             }
             
+            .app-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
             h1 {
                 font-size: 24px;
             }
@@ -125,36 +151,54 @@
 </head>
 <body>
     <div class="container">
+        <!-- ✅ ParoBible Logo -->
+        <img 
+            src="https://instiledge.github.io/privacy-policy-parobible/parobible-logo.png" 
+            alt="ParoBible Logo" 
+            class="app-logo"
+            onerror="this.style.display='none'"
+        >
+        
+        <!-- Success Icon -->
         <div class="icon">✅</div>
+        
+        <!-- Heading -->
         <h1>Email Verified!</h1>
-        <h2>Your account is now active</h2>
+        <h2>Welcome to ParoBible</h2>
         
-        <!-- App Icon (optional - add your actual icon URL) -->
-        <!-- <img src="https://yourcdn.com/parobible-icon.png" alt="ParoBible Icon" class="app-icon"> -->
-        
+        <!-- Description -->
         <p>
             Your email address has been successfully verified. 
             You can now access all features of ParoBible.
         </p>
         
-        <p>
-            <strong>Open the ParoBible app to continue exploring:</strong><br>
-            📖 Bible in 7 languages<br>
-            🎵 TTS Audio Bible<br>
-            📝 Reflection Notes<br>
-            🙏 Daily Prayers & More
-        </p>
+        <!-- Features List -->
+        <ul class="features">
+            <li>📖 Bible in 7 languages</li>
+            <li>🎵 Audio Bible with TTS</li>
+            <li>📝 Personal reflection notes</li>
+            <li>🙏 Daily prayers & devotions</li>
+            <li>❓ Interactive Bible quizzes</li>
+            <li>📚 Spiritual books library</li>
+        </ul>
         
-        <!-- Deep link button (will open app if installed) -->
+        <!-- Call to Action -->
         <a href="parobible://open" class="button">Open ParoBible App</a>
         
-        <!-- Fallback for app stores -->
-        <div style="margin-top: 20px;">
-            <p style="font-size: 14px; color: #999;">Don't have the app yet?</p>
-            <a href="https://apps.apple.com/app/parobible" class="button" style="font-size: 16px; padding: 10px 30px;">Download on iOS</a>
-            <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button" style="font-size: 16px; padding: 10px 30px;">Download on Android</a>
+        <!-- App Store Links -->
+        <div style="margin-top: 30px;">
+            <p style="font-size: 14px; color: #999; margin-bottom: 15px;">
+                Don't have the app yet?
+            </p>
+            <a href="https://apps.apple.com/app/parobible" class="button button-secondary">
+                📱 Download on iOS
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button button-secondary">
+                🤖 Download on Android
+            </a>
         </div>
         
+        <!-- Footer -->
         <div class="footer">
             <p>
                 Need help? Contact us at 
@@ -162,6 +206,9 @@
             </p>
             <p style="margin-top: 10px;">
                 <a href="https://instiledge.github.io/privacy-policy-parobible/">Privacy Policy</a>
+            </p>
+            <p style="margin-top: 5px; font-size: 12px;">
+                © 2025 ParoBible. All rights reserved.
             </p>
         </div>
     </div>
