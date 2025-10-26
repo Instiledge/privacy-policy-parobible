@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Correo Verificado - ParoBible</title>
+    <title>Verificación de Email - ParoBible</title>
     <style>
         * {
             margin: 0;
@@ -31,7 +31,6 @@
             text-align: center;
         }
         
-        /* ✅ Logo styling */
         .app-logo {
             width: 120px;
             height: 120px;
@@ -44,6 +43,24 @@
         .icon {
             font-size: 60px;
             margin-bottom: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bounce {
             animation: bounce 1s ease infinite;
         }
         
@@ -93,6 +110,7 @@
             font-weight: 600;
             transition: transform 0.2s, box-shadow 0.2s;
             margin: 10px;
+            cursor: pointer;
         }
         
         .button:hover {
@@ -121,7 +139,18 @@
             text-decoration: none;
         }
         
-        /* Mobile responsiveness */
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
         @media (max-width: 600px) {
             .container {
                 padding: 30px 20px;
@@ -151,51 +180,59 @@
 </head>
 <body>
     <div class="container">
-        <!-- ✅ ParoBible Logo -->
+        <!-- Logo -->
         <img 
             src="https://instiledge.github.io/privacy-policy-parobible/parobible-logo.png" 
-            alt="Logo de ParoBible" 
+            alt="ParoBible Logo" 
             class="app-logo"
             onerror="this.style.display='none'"
         >
         
-        <!-- Success Icon -->
-        <div class="icon">✅</div>
+        <!-- Loading State -->
+        <div id="loading-state">
+            <div class="spinner"></div>
+            <h2>Verificando tu email...</h2>
+            <p>Por favor espera mientras confirmamos tu dirección de correo electrónico.</p>
+        </div>
         
-        <!-- Heading -->
-        <h1>¡Correo Verificado!</h1>
-        <h2>Bienvenido a ParoBible</h2>
+        <!-- Success State -->
+        <div id="success-state" class="hidden">
+            <div class="icon bounce">✅</div>
+            <h1>¡Email Verificado!</h1>
+            <h2>Bienvenido a ParoBible</h2>
+            <p>Tu dirección de correo electrónico ha sido verificada exitosamente. Ahora puedes acceder a todas las funciones de ParoBible.</p>
+            
+            <ul class="features">
+                <li>📖 Biblia en 7 idiomas</li>
+                <li>🎵 Biblia en audio con TTS</li>
+                <li>📝 Notas de reflexión personal</li>
+                <li>🙏 Oraciones y devocionales diarios</li>
+                <li>❓ Cuestionarios bíblicos interactivos</li>
+                <li>📚 Biblioteca de libros espirituales</li>
+            </ul>
+            
+            <a href="#" id="open-app-button" class="button">Abrir ParoBible</a>
+            
+            <div style="margin-top: 30px;">
+                <p style="font-size: 14px; color: #999; margin-bottom: 15px;">
+                    ¿Aún no tienes la aplicación?
+                </p>
+                <a href="https://apps.apple.com/app/parobible" class="button button-secondary">
+                    📱 Descargar en iOS
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button button-secondary">
+                    🤖 Descargar en Android
+                </a>
+            </div>
+        </div>
         
-        <!-- Description -->
-        <p>
-            Tu dirección de correo electrónico ha sido verificada exitosamente. 
-            Ahora puedes acceder a todas las funciones de ParoBible.
-        </p>
-        
-        <!-- Features List -->
-        <ul class="features">
-            <li>📖 Biblia en 7 idiomas</li>
-            <li>🎵 Audio Biblia con TTS</li>
-            <li>📝 Notas de reflexión personales</li>
-            <li>🙏 Oraciones y devociones diarias</li>
-            <li>❓ Cuestionarios bíblicos interactivos</li>
-            <li>📚 Biblioteca de libros espirituales</li>
-        </ul>
-        
-        <!-- Call to Action -->
-        <a href="parobible://open" class="button">Abrir la App ParoBible</a>
-        
-        <!-- App Store Links -->
-        <div style="margin-top: 30px;">
-            <p style="font-size: 14px; color: #999; margin-bottom: 15px;">
-                ¿Aún no tienes la aplicación?
-            </p>
-            <a href="https://apps.apple.com/app/parobible" class="button button-secondary">
-                📱 Descargar en iOS
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button button-secondary">
-                🤖 Descargar en Android
-            </a>
+        <!-- Error State -->
+        <div id="error-state" class="hidden">
+            <div class="icon">❌</div>
+            <h1>Verificación Fallida</h1>
+            <div class="error-message" id="error-message"></div>
+            <p>Por favor intenta registrarte nuevamente o contacta al soporte si el problema persiste.</p>
+            <a href="mailto:contact.parobible@gmail.com" class="button">Contactar Soporte</a>
         </div>
         
         <!-- Footer -->
@@ -212,5 +249,103 @@
             </p>
         </div>
     </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // ✅ Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEEWsFIsv2NyS5LZEJn0jMjXCT-XdAbgU",
+            authDomain: "parobible-app.firebaseapp.com",
+            projectId: "parobible-app",
+            storageBucket: "parobible-app.firebasestorage.app",
+            messagingSenderId: "324929509217",
+            appId: "1:324929509217:web:947e574e2ea14365505720",
+            measurementId: "G-GSD4LF0B70"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode');
+        const oobCode = urlParams.get('oobCode');
+
+        console.log('Modo:', mode);
+        console.log('Código:', oobCode ? 'Presente' : 'Faltante');
+
+        // Manejar diferentes modos de acción
+        async function handleAction() {
+            if (!oobCode) {
+                showError('Enlace de verificación inválido. El enlace puede haber expirado o estar mal formado.');
+                return;
+            }
+
+            if (mode === 'verifyEmail') {
+                try {
+                    // Aplicar el código de verificación de email
+                    await auth.applyActionCode(oobCode);
+                    console.log('✅ Email verificado exitosamente');
+                    showSuccess();
+                } catch (error) {
+                    console.error('❌ Error de verificación:', error);
+                    let errorMessage = 'Error al verificar el email. ';
+                    
+                    switch (error.code) {
+                        case 'auth/expired-action-code':
+                            errorMessage += 'El enlace de verificación ha expirado. Por favor solicita uno nuevo.';
+                            break;
+                        case 'auth/invalid-action-code':
+                            errorMessage += 'El enlace de verificación es inválido o ya ha sido usado.';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage += 'Esta cuenta ha sido deshabilitada.';
+                            break;
+                        case 'auth/user-not-found':
+                            errorMessage += 'No se encontró ninguna cuenta con este email.';
+                            break;
+                        default:
+                            errorMessage += error.message;
+                    }
+                    
+                    showError(errorMessage);
+                }
+            } else if (mode === 'resetPassword') {
+                // Redirigir a la página de restablecimiento de contraseña
+                window.location.href = 'reset-password-es.html?oobCode=' + oobCode;
+            } else {
+                showError('Modo de acción desconocido: ' + mode);
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('success-state').classList.remove('hidden');
+            
+            // Configurar el enlace profundo de la app
+            const appDeepLink = 'parobible://verify-success';
+            document.getElementById('open-app-button').href = appDeepLink;
+            
+            // Intentar abrir la app automáticamente
+            setTimeout(() => {
+                window.location.href = appDeepLink;
+            }, 1000);
+        }
+
+        function showError(message) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('success-state').classList.add('hidden');
+            document.getElementById('error-state').classList.remove('hidden');
+            document.getElementById('error-message').textContent = message;
+        }
+
+        // Iniciar el proceso de verificación
+        handleAction();
+    </script>
 </body>
 </html>
