@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email zweryfikowany - ParoBible</title>
+    <title>Weryfikacja e-mail - ParoBible</title>
     <style>
         * {
             margin: 0;
@@ -31,7 +31,6 @@
             text-align: center;
         }
         
-        /* ✅ Logo styling */
         .app-logo {
             width: 120px;
             height: 120px;
@@ -44,6 +43,24 @@
         .icon {
             font-size: 60px;
             margin-bottom: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bounce {
             animation: bounce 1s ease infinite;
         }
         
@@ -93,6 +110,7 @@
             font-weight: 600;
             transition: transform 0.2s, box-shadow 0.2s;
             margin: 10px;
+            cursor: pointer;
         }
         
         .button:hover {
@@ -121,7 +139,18 @@
             text-decoration: none;
         }
         
-        /* Mobile responsiveness */
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
         @media (max-width: 600px) {
             .container {
                 padding: 30px 20px;
@@ -151,7 +180,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- ✅ ParoBible Logo -->
+        <!-- Logo -->
         <img 
             src="https://instiledge.github.io/privacy-policy-parobible/parobible-logo.png" 
             alt="Logo ParoBible" 
@@ -159,49 +188,57 @@
             onerror="this.style.display='none'"
         >
         
-        <!-- Success Icon -->
-        <div class="icon">✅</div>
-        
-        <!-- Heading -->
-        <h1>Email zweryfikowany!</h1>
-        <h2>Witamy w ParoBible</h2>
-        
-        <!-- Description -->
-        <p>
-            Twój adres email został pomyślnie zweryfikowany. 
-            Możesz teraz korzystać ze wszystkich funkcji ParoBible.
-        </p>
-        
-        <!-- Features List -->
-        <ul class="features">
-            <li>📖 Biblia w 7 językach</li>
-            <li>🎵 Biblia audio z syntezą mowy</li>
-            <li>📝 Osobiste notatki do refleksji</li>
-            <li>🙏 Codzienne modlitwy i rozważania</li>
-            <li>❓ Interaktywne quizy biblijne</li>
-            <li>📚 Biblioteka książek duchowych</li>
-        </ul>
-        
-        <!-- Call to Action -->
-        <a href="parobible://open" class="button">Otwórz aplikację ParoBible</a>
-        
-        <!-- App Store Links -->
-        <div style="margin-top: 30px;">
-            <p style="font-size: 14px; color: #999; margin-bottom: 15px;">
-                Nie masz jeszcze aplikacji?
-            </p>
-            <a href="https://apps.apple.com/app/parobible" class="button button-secondary">
-                📱 Pobierz na iOS
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button button-secondary">
-                🤖 Pobierz na Android
-            </a>
+        <!-- Stan ładowania -->
+        <div id="loading-state">
+            <div class="spinner"></div>
+            <h2>Weryfikacja e-maila...</h2>
+            <p>Proszę czekać, weryfikujemy Twój adres e-mail.</p>
         </div>
         
-        <!-- Footer -->
+        <!-- Stan sukcesu -->
+        <div id="success-state" class="hidden">
+            <div class="icon bounce">✅</div>
+            <h1>E-mail zweryfikowany!</h1>
+            <h2>Witaj w ParoBible</h2>
+            <p>Twój adres e-mail został pomyślnie zweryfikowany. Możesz teraz korzystać ze wszystkich funkcji ParoBible.</p>
+            
+            <ul class="features">
+                <li>📖 Biblia w 7 językach</li>
+                <li>🎵 Audio Biblia z syntezą mowy</li>
+                <li>📝 Osobiste notatki refleksyjne</li>
+                <li>🙏 Codzienne modlitwy i nabożeństwa</li>
+                <li>❓ Interaktywne quizy biblijne</li>
+                <li>📚 Biblioteka książek duchowych</li>
+            </ul>
+            
+            <a href="#" id="open-app-button" class="button">Otwórz aplikację ParoBible</a>
+            
+            <div style="margin-top: 30px;">
+                <p style="font-size: 14px; color: #999; margin-bottom: 15px;">
+                    Nie masz jeszcze aplikacji?
+                </p>
+                <a href="https://apps.apple.com/app/parobible" class="button button-secondary">
+                    📱 Pobierz na iOS
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.instiledge.parobible" class="button button-secondary">
+                    🤖 Pobierz na Android
+                </a>
+            </div>
+        </div>
+        
+        <!-- Stan błędu -->
+        <div id="error-state" class="hidden">
+            <div class="icon">❌</div>
+            <h1>Weryfikacja nie powiodła się</h1>
+            <div class="error-message" id="error-message"></div>
+            <p>Spróbuj zarejestrować się ponownie lub skontaktuj się z pomocą techniczną, jeśli problem się powtarza.</p>
+            <a href="mailto:contact.parobible@gmail.com" class="button">Skontaktuj się z pomocą</a>
+        </div>
+        
+        <!-- Stopka -->
         <div class="footer">
             <p>
-                Potrzebujesz pomocy? Skontaktuj się z nami pod adresem 
+                Potrzebujesz pomocy? Skontaktuj się z nami na 
                 <a href="mailto:contact.parobible@gmail.com">contact.parobible@gmail.com</a>
             </p>
             <p style="margin-top: 10px;">
@@ -212,5 +249,103 @@
             </p>
         </div>
     </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // ✅ Twoja rzeczywista konfiguracja Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEEWsFIsv2NyS5LZEJn0jMjXCT-XdAbgU",
+            authDomain: "parobible-app.firebaseapp.com",
+            projectId: "parobible-app",
+            storageBucket: "parobible-app.firebasestorage.app",
+            messagingSenderId: "324929509217",
+            appId: "1:324929509217:web:947e574e2ea14365505720",
+            measurementId: "G-GSD4LF0B70"
+        };
+
+        // Inicjalizacja Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Pobierz parametry URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode');
+        const oobCode = urlParams.get('oobCode');
+
+        console.log('Tryb:', mode);
+        console.log('Kod:', oobCode ? 'Obecny' : 'Brakujący');
+
+        // Obsługa różnych trybów akcji
+        async function handleAction() {
+            if (!oobCode) {
+                showError('Nieprawidłowy link weryfikacyjny. Link może być wygasły lub nieprawidłowo sformatowany.');
+                return;
+            }
+
+            if (mode === 'verifyEmail') {
+                try {
+                    // Zastosuj kod weryfikacyjny e-maila
+                    await auth.applyActionCode(oobCode);
+                    console.log('✅ E-mail zweryfikowany pomyślnie');
+                    showSuccess();
+                } catch (error) {
+                    console.error('❌ Błąd weryfikacji:', error);
+                    let errorMessage = 'Nie udało się zweryfikować e-maila. ';
+                    
+                    switch (error.code) {
+                        case 'auth/expired-action-code':
+                            errorMessage += 'Link weryfikacyjny wygasł. Poproś o nowy.';
+                            break;
+                        case 'auth/invalid-action-code':
+                            errorMessage += 'Link weryfikacyjny jest nieprawidłowy lub został już użyty.';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage += 'To konto zostało wyłączone.';
+                            break;
+                        case 'auth/user-not-found':
+                            errorMessage += 'Nie znaleziono konta z tym adresem e-mail.';
+                            break;
+                        default:
+                            errorMessage += error.message;
+                    }
+                    
+                    showError(errorMessage);
+                }
+            } else if (mode === 'resetPassword') {
+                // Przekierowanie do strony resetowania hasła
+                window.location.href = 'reset-password-pl.html?oobCode=' + oobCode;
+            } else {
+                showError('Nieznany tryb akcji: ' + mode);
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('success-state').classList.remove('hidden');
+            
+            // Ustaw deep link do aplikacji
+            const appDeepLink = 'parobible://verify-success';
+            document.getElementById('open-app-button').href = appDeepLink;
+            
+            // Spróbuj automatycznie otworzyć aplikację
+            setTimeout(() => {
+                window.location.href = appDeepLink;
+            }, 1000);
+        }
+
+        function showError(message) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('success-state').classList.add('hidden');
+            document.getElementById('error-state').classList.remove('hidden');
+            document.getElementById('error-message').textContent = message;
+        }
+
+        // Rozpocznij proces weryfikacji
+        handleAction();
+    </script>
 </body>
 </html>
