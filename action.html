@@ -237,7 +237,9 @@
             <div class="icon">✅</div>
             <h1 id="verify-title">Email Verified!</h1>
             <p id="verify-message">Your email has been successfully verified.</p>
-            <a href="parobible://login" class="button" id="verify-open-app">Open ParoBible</a>
+            <button onclick="openAppWithDeepLink('Home')" class="button" id="verify-open-app">
+                Open ParoBible
+            </button>
         </div>
         
         <!-- Error State -->
@@ -287,7 +289,9 @@
                 errorMessage: 'Something went wrong.',
                 errorExpired: 'This link has expired. Please request a new one from the app.',
                 errorInvalid: 'This link is invalid or has already been used.',
-                errorDefault: 'An error occurred. Please try again.'
+                errorDefault: 'An error occurred. Please try again.',
+                appNotInstalled: 'App Not Installed',
+                installMessage: 'Please install ParoBible from your app store to complete this action.'
             },
             fr: {
                 pageTitle: 'ParoBible',
@@ -310,7 +314,9 @@
                 errorMessage: 'Une erreur s\'est produite.',
                 errorExpired: 'Ce lien a expiré. Veuillez en demander un nouveau depuis l\'application.',
                 errorInvalid: 'Ce lien est invalide ou a déjà été utilisé.',
-                errorDefault: 'Une erreur s\'est produite. Veuillez réessayer.'
+                errorDefault: 'Une erreur s\'est produite. Veuillez réessayer.',
+                appNotInstalled: 'Application Non Installée',
+                installMessage: 'Veuillez installer ParoBible depuis votre store pour continuer.'
             },
             de: {
                 pageTitle: 'ParoBible',
@@ -333,7 +339,9 @@
                 errorMessage: 'Etwas ist schief gelaufen.',
                 errorExpired: 'Dieser Link ist abgelaufen. Bitte fordern Sie einen neuen in der App an.',
                 errorInvalid: 'Dieser Link ist ungültig oder wurde bereits verwendet.',
-                errorDefault: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'
+                errorDefault: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+                appNotInstalled: 'App Nicht Installiert',
+                installMessage: 'Bitte installieren Sie ParoBible aus Ihrem App Store, um fortzufahren.'
             },
             es: {
                 pageTitle: 'ParoBible',
@@ -356,7 +364,9 @@
                 errorMessage: 'Algo salió mal.',
                 errorExpired: 'Este enlace ha caducado. Solicita uno nuevo desde la aplicación.',
                 errorInvalid: 'Este enlace es inválido o ya fue usado.',
-                errorDefault: 'Ocurrió un error. Por favor, inténtalo de nuevo.'
+                errorDefault: 'Ocurrió un error. Por favor, inténtalo de nuevo.',
+                appNotInstalled: 'App No Instalada',
+                installMessage: 'Por favor instala ParoBible desde tu tienda de aplicaciones para continuar.'
             },
             it: {
                 pageTitle: 'ParoBible',
@@ -379,7 +389,9 @@
                 errorMessage: 'Qualcosa è andato storto.',
                 errorExpired: 'Questo link è scaduto. Richiedine uno nuovo dall\'app.',
                 errorInvalid: 'Questo link non è valido o è già stato utilizzato.',
-                errorDefault: 'Si è verificato un errore. Riprova.'
+                errorDefault: 'Si è verificato un errore. Riprova.',
+                appNotInstalled: 'App Non Installata',
+                installMessage: 'Installa ParoBible dal tuo app store per continuare.'
             },
             pl: {
                 pageTitle: 'ParoBible',
@@ -402,7 +414,9 @@
                 errorMessage: 'Coś poszło nie tak.',
                 errorExpired: 'Ten link wygasł. Poproś o nowy w aplikacji.',
                 errorInvalid: 'Ten link jest nieprawidłowy lub został już użyty.',
-                errorDefault: 'Wystąpił błąd. Spróbuj ponownie.'
+                errorDefault: 'Wystąpił błąd. Spróbuj ponownie.',
+                appNotInstalled: 'Aplikacja Nie Zainstalowana',
+                installMessage: 'Zainstaluj ParoBible ze swojego sklepu z aplikacjami, aby kontynuować.'
             },
             pt: {
                 pageTitle: 'ParoBible',
@@ -425,7 +439,9 @@
                 errorMessage: 'Algo deu errado.',
                 errorExpired: 'Este link expirou. Solicite um novo no aplicativo.',
                 errorInvalid: 'Este link é inválido ou já foi usado.',
-                errorDefault: 'Ocorreu um erro. Tente novamente.'
+                errorDefault: 'Ocorreu um erro. Tente novamente.',
+                appNotInstalled: 'App Não Instalada',
+                installMessage: 'Por favor instale o ParoBible na sua loja de aplicativos para continuar.'
             }
         };
 
@@ -522,8 +538,8 @@
                 
                 // Auto-redirect after 3 seconds
                 setTimeout(() => {
-                    window.location.href = 'parobible://login';
-                }, 3000);
+                    openAppWithDeepLink('Home');
+                }, 2000);
                 
             } catch (error) {
                 console.error('Email verification error:', error);
@@ -591,8 +607,8 @@
                 
                 // Redirect after 3 seconds
                 setTimeout(() => {
-                    window.location.href = 'parobible://login';
-                }, 3000);
+                    openAppWithDeepLink('ProfileManagement');
+                }, 2000);
                 
             } catch (error) {
                 console.error('Password reset error:', error);
@@ -625,6 +641,53 @@
             document.getElementById('error-title').textContent = lang.errorTitle;
             document.getElementById('error-message').textContent = lang.errorMessage;
             document.getElementById('error-detail').textContent = message;
+        }
+
+        // Smart Deep Link Handler with Fallback
+        function openAppWithDeepLink(screen) {
+            const deepLinkUrl = `parobible://navigate/${screen}`;
+            const fallbackDelay = 2000; // 2 seconds
+            const startTime = Date.now();
+            
+            console.log('🔗 Attempting to open app:', deepLinkUrl);
+            
+            // Attempt to open the app
+            window.location.href = deepLinkUrl;
+            
+            // Set up fallback for when app is not installed
+            const fallbackTimer = setTimeout(() => {
+                // Check if user is still on the page (app didn't open)
+                if (Date.now() - startTime < fallbackDelay + 500) {
+                    console.log('📱 App not installed, showing fallback');
+                    showAppNotInstalledMessage();
+                }
+            }, fallbackDelay);
+            
+            // Clean up timer if page is hidden (app opened successfully)
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    clearTimeout(fallbackTimer);
+                    console.log('✅ App opened successfully');
+                }
+            });
+        }
+        
+        // Show message when app is not installed
+        function showAppNotInstalledMessage() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <div class="icon">📱</div>
+                <h1>${lang.appNotInstalled || 'App Not Installed'}</h1>
+                <p>${lang.installMessage || 'Please install ParoBible from your app store to continue.'}</p>
+                <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
+                    <a href="https://apps.apple.com/app/parobible" class="button" style="flex: 1; max-width: 200px;">
+                        App Store
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.yourapp.parobible" class="button" style="flex: 1; max-width: 200px;">
+                        Play Store
+                    </a>
+                </div>
+            `;
         }
 
         // Start action handling
