@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">ParoBible</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .app-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            display: block;
+        }
+        
+        .icon {
+            font-size: 80px;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .error, .success {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+        }
+        
+        .success {
+            background: #efe;
+            color: #3c3;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            transition: color 0.2s;
+        }
+        
+        .toggle-password:hover {
+            color: #667eea;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img 
+            src="https://instiledge.github.io/privacy-policy-parobible/parobible-logo.png" 
+            alt="ParoBible Logo" 
+            class="app-logo"
+            onerror="this.style.display='none'"
+        >
+        
+        <!-- Loading State -->
+        <div id="loading-state">
+            <div class="spinner"></div>
+            <p id="loading-text">Processing...</p>
+        </div>
+        
+        <!-- Password Reset Form -->
+        <div id="reset-password-view" class="hidden">
+            <h1 id="reset-title">Reset Your Password</h1>
+            <p class="email" id="reset-email"></p>
+            <div id="reset-error" class="error hidden"></div>
+            <div id="reset-success" class="success hidden"></div>
+            
+            <form id="reset-form">
+                <div class="form-group">
+                    <label for="new-password" id="label-new">New Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="new-password" placeholder="Min 8 characters" minlength="8" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('new-password', this)">👁️</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password" id="label-confirm">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirm-password" placeholder="Confirm password" minlength="8" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('confirm-password', this)">👁️</button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="button" id="reset-submit">Reset Password</button>
+            </form>
+        </div>
+        
+        <!-- Email Verification Success -->
+        <div id="verify-email-view" class="hidden">
+            <div class="icon">✅</div>
+            <h1 id="verify-title">Email Verified!</h1>
+            <p id="verify-message">Your email has been successfully verified.</p>
+            <a href="parobible://login" class="button" id="verify-open-app">Open ParoBible</a>
+        </div>
+        
+        <!-- Error State -->
+        <div id="error-view" class="hidden">
+            <div class="icon">❌</div>
+            <h1 id="error-title">Action Failed</h1>
+            <p id="error-message">Something went wrong.</p>
+            <div class="error" id="error-detail"></div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>🙏 ParoBible</p>
+            <p style="margin-top: 10px;">
+                <a href="mailto:contact.parobible@gmail.com" style="color: #667eea; text-decoration: none;">
+                    contact.parobible@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // 🌍 Multi-language translations for all 7 languages
+        const translations = {
+            en: {
+                pageTitle: 'ParoBible',
+                loading: 'Processing...',
+                resetTitle: 'Reset Your Password',
+                resetFor: 'for',
+                labelNew: 'New Password',
+                labelConfirm: 'Confirm Password',
+                placeholderNew: 'Min 8 characters',
+                placeholderConfirm: 'Confirm password',
+                resetSubmit: 'Reset Password',
+                resetSubmitting: 'Resetting...',
+                resetSuccess: 'Password reset successfully! Redirecting to app...',
+                errorMatch: 'Passwords do not match',
+                errorLength: 'Password must be at least 8 characters',
+                verifyTitle: 'Email Verified!',
+                verifyMessage: 'Your email has been successfully verified. You can now access all features of ParoBible.',
+                openApp: 'Open ParoBible',
+                errorTitle: 'Action Failed',
+                errorMessage: 'Something went wrong.',
+                errorExpired: 'This link has expired. Please request a new one from the app.',
+                errorInvalid: 'This link is invalid or has already been used.',
+                errorDefault: 'An error occurred. Please try again.'
+            },
+            fr: {
+                pageTitle: 'ParoBible',
+                loading: 'Traitement...',
+                resetTitle: 'Réinitialisez votre mot de passe',
+                resetFor: 'pour',
+                labelNew: 'Nouveau mot de passe',
+                labelConfirm: 'Confirmer le mot de passe',
+                placeholderNew: 'Min 8 caractères',
+                placeholderConfirm: 'Confirmez le mot de passe',
+                resetSubmit: 'Réinitialiser',
+                resetSubmitting: 'En cours...',
+                resetSuccess: 'Mot de passe réinitialisé avec succès ! Redirection vers l\'app...',
+                errorMatch: 'Les mots de passe ne correspondent pas',
+                errorLength: 'Le mot de passe doit contenir au moins 8 caractères',
+                verifyTitle: 'Email vérifié !',
+                verifyMessage: 'Votre email a été vérifié avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités de ParoBible.',
+                openApp: 'Ouvrir ParoBible',
+                errorTitle: 'Action échouée',
+                errorMessage: 'Une erreur s\'est produite.',
+                errorExpired: 'Ce lien a expiré. Veuillez en demander un nouveau depuis l\'application.',
+                errorInvalid: 'Ce lien est invalide ou a déjà été utilisé.',
+                errorDefault: 'Une erreur s\'est produite. Veuillez réessayer.'
+            },
+            de: {
+                pageTitle: 'ParoBible',
+                loading: 'Verarbeitung...',
+                resetTitle: 'Passwort zurücksetzen',
+                resetFor: 'für',
+                labelNew: 'Neues Passwort',
+                labelConfirm: 'Passwort bestätigen',
+                placeholderNew: 'Min. 8 Zeichen',
+                placeholderConfirm: 'Passwort bestätigen',
+                resetSubmit: 'Zurücksetzen',
+                resetSubmitting: 'Wird zurückgesetzt...',
+                resetSuccess: 'Passwort erfolgreich zurückgesetzt! Weiterleitung zur App...',
+                errorMatch: 'Passwörter stimmen nicht überein',
+                errorLength: 'Passwort muss mindestens 8 Zeichen lang sein',
+                verifyTitle: 'E-Mail verifiziert!',
+                verifyMessage: 'Ihre E-Mail wurde erfolgreich verifiziert. Sie können jetzt alle Funktionen von ParoBible nutzen.',
+                openApp: 'ParoBible öffnen',
+                errorTitle: 'Aktion fehlgeschlagen',
+                errorMessage: 'Etwas ist schief gelaufen.',
+                errorExpired: 'Dieser Link ist abgelaufen. Bitte fordern Sie einen neuen in der App an.',
+                errorInvalid: 'Dieser Link ist ungültig oder wurde bereits verwendet.',
+                errorDefault: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'
+            },
+            es: {
+                pageTitle: 'ParoBible',
+                loading: 'Procesando...',
+                resetTitle: 'Restablecer contraseña',
+                resetFor: 'para',
+                labelNew: 'Nueva contraseña',
+                labelConfirm: 'Confirmar contraseña',
+                placeholderNew: 'Mín. 8 caracteres',
+                placeholderConfirm: 'Confirme la contraseña',
+                resetSubmit: 'Restablecer',
+                resetSubmitting: 'Restableciendo...',
+                resetSuccess: '¡Contraseña restablecida exitosamente! Redirigiendo a la app...',
+                errorMatch: 'Las contraseñas no coinciden',
+                errorLength: 'La contraseña debe tener al menos 8 caracteres',
+                verifyTitle: '¡Email verificado!',
+                verifyMessage: 'Tu email ha sido verificado exitosamente. Ahora puedes acceder a todas las funciones de ParoBible.',
+                openApp: 'Abrir ParoBible',
+                errorTitle: 'Acción fallida',
+                errorMessage: 'Algo salió mal.',
+                errorExpired: 'Este enlace ha caducado. Solicita uno nuevo desde la aplicación.',
+                errorInvalid: 'Este enlace es inválido o ya fue usado.',
+                errorDefault: 'Ocurrió un error. Por favor, inténtalo de nuevo.'
+            },
+            it: {
+                pageTitle: 'ParoBible',
+                loading: 'Elaborazione...',
+                resetTitle: 'Reimposta la password',
+                resetFor: 'per',
+                labelNew: 'Nuova password',
+                labelConfirm: 'Conferma password',
+                placeholderNew: 'Min. 8 caratteri',
+                placeholderConfirm: 'Conferma password',
+                resetSubmit: 'Reimposta',
+                resetSubmitting: 'Reimpostazione...',
+                resetSuccess: 'Password reimpostata con successo! Reindirizzamento all\'app...',
+                errorMatch: 'Le password non corrispondono',
+                errorLength: 'La password deve contenere almeno 8 caratteri',
+                verifyTitle: 'Email verificata!',
+                verifyMessage: 'La tua email è stata verificata con successo. Ora puoi accedere a tutte le funzionalità di ParoBible.',
+                openApp: 'Apri ParoBible',
+                errorTitle: 'Azione fallita',
+                errorMessage: 'Qualcosa è andato storto.',
+                errorExpired: 'Questo link è scaduto. Richiedine uno nuovo dall\'app.',
+                errorInvalid: 'Questo link non è valido o è già stato utilizzato.',
+                errorDefault: 'Si è verificato un errore. Riprova.'
+            },
+            pl: {
+                pageTitle: 'ParoBible',
+                loading: 'Przetwarzanie...',
+                resetTitle: 'Zresetuj hasło',
+                resetFor: 'dla',
+                labelNew: 'Nowe hasło',
+                labelConfirm: 'Potwierdź hasło',
+                placeholderNew: 'Min. 8 znaków',
+                placeholderConfirm: 'Potwierdź hasło',
+                resetSubmit: 'Zresetuj',
+                resetSubmitting: 'Resetowanie...',
+                resetSuccess: 'Hasło zostało zresetowane! Przekierowanie do aplikacji...',
+                errorMatch: 'Hasła nie są zgodne',
+                errorLength: 'Hasło musi mieć co najmniej 8 znaków',
+                verifyTitle: 'Email zweryfikowany!',
+                verifyMessage: 'Twój email został pomyślnie zweryfikowany. Możesz teraz korzystać ze wszystkich funkcji ParoBible.',
+                openApp: 'Otwórz ParoBible',
+                errorTitle: 'Akcja nie powiodła się',
+                errorMessage: 'Coś poszło nie tak.',
+                errorExpired: 'Ten link wygasł. Poproś o nowy w aplikacji.',
+                errorInvalid: 'Ten link jest nieprawidłowy lub został już użyty.',
+                errorDefault: 'Wystąpił błąd. Spróbuj ponownie.'
+            },
+            pt: {
+                pageTitle: 'ParoBible',
+                loading: 'Processando...',
+                resetTitle: 'Redefinir senha',
+                resetFor: 'para',
+                labelNew: 'Nova senha',
+                labelConfirm: 'Confirmar senha',
+                placeholderNew: 'Mín. 8 caracteres',
+                placeholderConfirm: 'Confirme a senha',
+                resetSubmit: 'Redefinir',
+                resetSubmitting: 'Redefinindo...',
+                resetSuccess: 'Senha redefinida com sucesso! Redirecionando para o app...',
+                errorMatch: 'As senhas não correspondem',
+                errorLength: 'A senha deve ter pelo menos 8 caracteres',
+                verifyTitle: 'Email verificado!',
+                verifyMessage: 'Seu email foi verificado com sucesso. Agora você pode acessar todos os recursos do ParoBible.',
+                openApp: 'Abrir ParoBible',
+                errorTitle: 'Ação falhou',
+                errorMessage: 'Algo deu errado.',
+                errorExpired: 'Este link expirou. Solicite um novo no aplicativo.',
+                errorInvalid: 'Este link é inválido ou já foi usado.',
+                errorDefault: 'Ocorreu um erro. Tente novamente.'
+            }
+        };
+
+        // Detect language and mode from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode');
+        const oobCode = urlParams.get('oobCode');
+        const userLang = urlParams.get('lang') || navigator.language.split('-')[0] || 'en';
+        const lang = translations[userLang] || translations.en;
+
+        console.log('🔍 Mode:', mode, '| Language:', userLang, '| Code:', oobCode ? 'present' : 'missing');
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEEWsFIsv2NyS5LZEJn0jMjXCT-XdAbgU",
+            authDomain: "parobible-app.firebaseapp.com",
+            projectId: "parobible-app",
+            storageBucket: "parobible-app.firebasestorage.app",
+            messagingSenderId: "324929509217",
+            appId: "1:324929509217:web:947e574e2ea14365505720"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Apply initial translations
+        document.getElementById('page-title').textContent = lang.pageTitle;
+        document.getElementById('loading-text').textContent = lang.loading;
+
+        // Route to correct handler based on mode
+        async function handleAction() {
+            if (!oobCode) {
+                showError(lang.errorInvalid);
+                return;
+            }
+
+            try {
+                switch(mode) {
+                    case 'resetPassword':
+                        await handlePasswordReset();
+                        break;
+                    case 'verifyEmail':
+                        await handleEmailVerification();
+                        break;
+                    case 'recoverEmail':
+                        await handleEmailRecovery();
+                        break;
+                    default:
+                        showError('Invalid action mode: ' + mode);
+                }
+            } catch (error) {
+                console.error('Action error:', error);
+                showError(error.message || lang.errorDefault);
+            }
+        }
+
+        // Handle Password Reset
+        async function handlePasswordReset() {
+            try {
+                const email = await auth.verifyPasswordResetCode(oobCode);
+                console.log('✅ Password reset code verified for:', email);
+                
+                document.getElementById('reset-email').textContent = `${lang.resetFor} ${email}`;
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('reset-password-view').classList.remove('hidden');
+                
+                // Apply translations
+                document.getElementById('reset-title').textContent = lang.resetTitle;
+                document.getElementById('label-new').textContent = lang.labelNew;
+                document.getElementById('label-confirm').textContent = lang.labelConfirm;
+                document.getElementById('new-password').placeholder = lang.placeholderNew;
+                document.getElementById('confirm-password').placeholder = lang.placeholderConfirm;
+                document.getElementById('reset-submit').textContent = lang.resetSubmit;
+                
+            } catch (error) {
+                console.error('Password reset verification error:', error);
+                const message = error.code === 'auth/expired-action-code' ? lang.errorExpired : lang.errorInvalid;
+                showError(message);
+            }
+        }
+
+        // Handle Email Verification
+        async function handleEmailVerification() {
+            try {
+                await auth.applyActionCode(oobCode);
+                console.log('✅ Email verified successfully');
+                
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('verify-email-view').classList.remove('hidden');
+                
+                document.getElementById('verify-title').textContent = lang.verifyTitle;
+                document.getElementById('verify-message').textContent = lang.verifyMessage;
+                document.getElementById('verify-open-app').textContent = lang.openApp;
+                
+                // Auto-redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'parobible://login';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Email verification error:', error);
+                const message = error.code === 'auth/expired-action-code' ? lang.errorExpired : lang.errorInvalid;
+                showError(message);
+            }
+        }
+
+        // Handle Email Recovery
+        async function handleEmailRecovery() {
+            try {
+                const info = await auth.checkActionCode(oobCode);
+                await auth.applyActionCode(oobCode);
+                console.log('✅ Email recovery completed');
+                
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('verify-email-view').classList.remove('hidden');
+                
+                document.getElementById('verify-title').textContent = 'Email Recovered';
+                document.getElementById('verify-message').textContent = 'Your email has been successfully recovered.';
+                
+            } catch (error) {
+                console.error('Email recovery error:', error);
+                showError(lang.errorDefault);
+            }
+        }
+
+        // Password Reset Form Submission
+        document.getElementById('reset-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const errorDiv = document.getElementById('reset-error');
+            const successDiv = document.getElementById('reset-success');
+            const submitBtn = document.getElementById('reset-submit');
+            
+            // Hide previous messages
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+            
+            // Validate
+            if (newPassword !== confirmPassword) {
+                errorDiv.textContent = lang.errorMatch;
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                errorDiv.textContent = lang.errorLength;
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = lang.resetSubmitting;
+            
+            try {
+                await auth.confirmPasswordReset(oobCode, newPassword);
+                console.log('✅ Password reset successful');
+                
+                successDiv.textContent = lang.resetSuccess;
+                successDiv.classList.remove('hidden');
+                
+                // Redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'parobible://login';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Password reset error:', error);
+                errorDiv.textContent = error.message || lang.errorDefault;
+                errorDiv.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.textContent = lang.resetSubmit;
+            }
+        });
+
+        // Toggle password visibility
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        // Show error state
+        function showError(message) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('reset-password-view').classList.add('hidden');
+            document.getElementById('verify-email-view').classList.add('hidden');
+            document.getElementById('error-view').classList.remove('hidden');
+            
+            document.getElementById('error-title').textContent = lang.errorTitle;
+            document.getElementById('error-message').textContent = lang.errorMessage;
+            document.getElementById('error-detail').textContent = message;
+        }
+
+        // Start action handling
+        handleAction();
+    </script>
+</body>
+</html>
