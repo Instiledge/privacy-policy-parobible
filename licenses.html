@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source Licenses - LectiOra</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            padding: 15px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1, h2, h3 {
+            color: #1a1a1a;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #007bff;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        strong {
+            color: #111;
+        }
+        .license-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .license-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .license-type {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .license-description {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .category-header {
+            background-color: #e8f4f8;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .highlight-box {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 13px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCRIPT TO DEFINE THE EMAIL IN ONE PLACE -->
+    <script>
+        const supportEmail = "contact.lectiora@gmail.com";
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailElements = document.querySelectorAll('.support-email');
+            emailElements.forEach(function(element) {
+                element.textContent = supportEmail;
+            });
+        });
+    </script>
+
+    <div class="container">
+        <!-- English Section -->
+        <h1>Open Source Licenses - LectiOra</h1>
+        <p><strong>Last Updated:</strong> October 30, 2025</p>
+
+        <div class="highlight-box">
+            <h3>Acknowledgment</h3>
+            <p>LectiOra is built with gratitude on the shoulders of the open-source community. This page lists the third-party libraries, frameworks, and services that make our application possible. We are deeply thankful to all the developers and organizations who contribute their work freely to advance technology and innovation.</p>
+        </div>
+
+        <div class="category-header">
+            <h2>📱 Core Framework & Development Tools</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">React Native</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">
+                A framework for building native mobile applications using React. React Native enables LectiOra to provide a seamless cross-platform experience on both iOS and Android.
+            </div>
+            <p><strong>Copyright:</strong> Meta Platforms, Inc. and affiliates</p>
+            <p><strong>Website:</strong> <a href="https://reactnative.dev" target="_blank">https://reactnative.dev</a></p>
+            <p><strong>License:</strong> <a href="https://github.com/facebook/react-native/blob/main/LICENSE" target="_blank">MIT License</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Expo</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">
+                An open-source platform for making universal native apps with React that run on Android, iOS, and the web. Expo provides the development environment, build system, and essential native APIs for LectiOra.
+            </div>
+            <p><strong>Copyright:</strong> 650 Industries, Inc. (Expo)</p>
+            <p><strong>Website:</strong> <a href="https://expo.dev" target="_blank">https://expo.dev</a></p>
+            <p><strong>License:</strong> <a href="https://github.com/expo/expo/blob/main/LICENSE" target="_blank">MIT License</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Expo Application Services (EAS)</div>
+            <div class="license-type">Commercial Service (Free Tier Available)</div>
+            <div class="license-description">
+                EAS Build, Submit, and Update services are used to build, distribute, and update the LectiOra application across app stores. EAS is a commercial service provided by Expo with generous free tier offerings for open-source and small-scale projects.
+            </div>
+            <p><strong>Provider:</strong> Expo (650 Industries, Inc.)</p>
+            <p><strong>Website:</strong> <a href="https://expo.dev/eas" target="_blank">https://expo.dev/eas</a></p>
+            <p><strong>Terms:</strong> <a href="https://expo.dev/terms" target="_blank">Expo Terms of Service</a></p>
+        </div>
+
+        <div class="category-header">
+            <h2>☁️ Backend & Cloud Services</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Firebase</div>
+            <div class="license-type">Proprietary (Google Cloud Platform)</div>
+            <div class="license-description">
+                Firebase provides the backend infrastructure for LectiOra, including Firebase Authentication (for user accounts), Cloud Firestore (for data storage and sync), Firebase Cloud Functions (for serverless backend logic), and Firebase Cloud Messaging (for push notifications).
+            </div>
+            <p><strong>Provider:</strong> Google LLC</p>
+            <p><strong>Website:</strong> <a href="https://firebase.google.com" target="_blank">https://firebase.google.com</a></p>
+            <p><strong>Terms:</strong> <a href="https://firebase.google.com/terms" target="_blank">Firebase Terms of Service</a></p>
+            <p><strong>Privacy:</strong> <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy & Security</a></p>
+            <p><strong>Note:</strong> The Firebase JavaScript SDK used in LectiOra is licensed under Apache License 2.0</p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Google Cloud Platform (GCP)</div>
+            <div class="license-type">Proprietary</div>
+            <div class="license-description">
+                LectiOra uses various Google Cloud services through Firebase, including Cloud Functions, Firestore, and Cloud Storage. These services enable reliable data storage, serverless computing, and content delivery.
+            </div>
+            <p><strong>Provider:</strong> Google LLC</p>
+            <p><strong>Website:</strong> <a href="https://cloud.google.com" target="_blank">https://cloud.google.com</a></p>
+            <p><strong>Terms:</strong> <a href="https://cloud.google.com/terms" target="_blank">Google Cloud Terms of Service</a></p>
+        </div>
+
+        <div class="category-header">
+            <h2>💳 Subscription & Monetization</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">RevenueCat</div>
+            <div class="license-type">Proprietary (Commercial Service with Free Tier)</div>
+            <div class="license-description">
+                RevenueCat provides subscription infrastructure and analytics for LectiOra's Premium plan. It handles in-app purchase management, subscription status validation, and cross-platform subscription sync between iOS and Android.
+            </div>
+            <p><strong>Provider:</strong> RevenueCat, Inc.</p>
+            <p><strong>Website:</strong> <a href="https://www.revenuecat.com" target="_blank">https://www.revenuecat.com</a></p>
+            <p><strong>Terms:</strong> <a href="https://www.revenuecat.com/terms" target="_blank">RevenueCat Terms of Service</a></p>
+            <p><strong>Privacy:</strong> <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat Privacy Policy</a></p>
+            <p><strong>Note:</strong> The RevenueCat React Native SDK is open-source under MIT License</p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Google Play Console</div>
+            <div class="license-type">Proprietary (Google Play Developer Platform)</div>
+            <div class="license-description">
+                Google Play Console is the developer platform used to publish, manage, and distribute LectiOra on the Google Play Store. It also handles payment processing for in-app purchases and subscriptions on Android devices.
+            </div>
+            <p><strong>Provider:</strong> Google LLC</p>
+            <p><strong>Website:</strong> <a href="https://play.google.com/console" target="_blank">https://play.google.com/console</a></p>
+            <p><strong>Terms:</strong> <a href="https://play.google.com/about/developer-distribution-agreement.html" target="_blank">Google Play Developer Distribution Agreement</a></p>
+        </div>
+
+        <div class="category-header">
+            <h2>📚 React Native Libraries (MIT Licensed)</h2>
+        </div>
+
+        <p style="margin: 20px 0;">LectiOra uses numerous open-source React Native libraries, all licensed under the MIT License unless otherwise noted:</p>
+
+        <div class="license-box">
+            <div class="license-name">React Navigation</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">Routing and navigation library for React Native apps</div>
+            <p><strong>Website:</strong> <a href="https://reactnavigation.org" target="_blank">https://reactnavigation.org</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">React Native AsyncStorage</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">Persistent key-value storage system for React Native</div>
+            <p><strong>Website:</strong> <a href="https://react-native-async-storage.github.io/async-storage/" target="_blank">AsyncStorage Documentation</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">React i18next</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">Internationalization framework enabling LectiOra's 7-language support (EN, FR, ES, DE, IT, PT, PL)</div>
+            <p><strong>Website:</strong> <a href="https://react.i18next.com" target="_blank">https://react.i18next.com</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Expo Vector Icons (@expo/vector-icons)</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">Icon sets including FontAwesome, MaterialIcons, and Ionicons used throughout LectiOra's interface</div>
+            <p><strong>Website:</strong> <a href="https://icons.expo.fyi" target="_blank">https://icons.expo.fyi</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">React Native Safe Area Context</div>
+            <div class="license-type">MIT License</div>
+            <div class="license-description">Provides safe area inset information for proper UI layout on modern devices</div>
+            <p><strong>Website:</strong> <a href="https://github.com/th3rdwave/react-native-safe-area-context" target="_blank">GitHub Repository</a></p>
+        </div>
+
+        <p style="margin: 30px 0; font-size: 14px; color: #666;">
+            <strong>Additional Libraries:</strong> LectiOra uses many other open-source React Native libraries for specific functionality (animations, gestures, date handling, etc.). For a complete list, please see our <code>package.json</code> file in the source repository, or contact us at <span class="support-email"></span>.
+        </p>
+
+        <div class="category-header">
+            <h2>📖 Content & Data</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Bible Translations</div>
+            <div class="license-type">Various Public Domain & Licensed Sources</div>
+            <div class="license-description">
+                LectiOra provides access to multiple Bible translations across 7 languages. Most translations are in the public domain or used under permissions from their respective publishers. Specific translation copyrights are noted within the app's Bible version selection screen.
+            </div>
+            <p><strong>Note:</strong> Users should refer to individual Bible version attributions within the app for specific copyright and usage terms.</p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Catechism of the Catholic Church (CEC)</div>
+            <div class="license-type">Copyright © Libreria Editrice Vaticana</div>
+            <div class="license-description">
+                The complete text of the Catechism of the Catholic Church is provided for non-commercial, educational, and devotional use. The official text is © Libreria Editrice Vaticana, with English translation by the United States Conference of Catholic Bishops (USCCB).
+            </div>
+            <p><strong>Copyright Holder:</strong> Libreria Editrice Vaticana</p>
+            <p><strong>Website:</strong> <a href="https://www.vatican.va" target="_blank">https://www.vatican.va</a></p>
+        </div>
+
+        <div class="highlight-box">
+            <h2>MIT License (Standard Terms)</h2>
+            <p>Most of the open-source libraries used in LectiOra are licensed under the MIT License, which permits:</p>
+            <ul>
+                <li>Commercial and non-commercial use</li>
+                <li>Modification and distribution</li>
+                <li>Private use</li>
+            </ul>
+            <p>Under the condition that the original copyright notice and license text are included in all copies or substantial portions of the software.</p>
+            <details>
+                <summary style="cursor: pointer; color: #007bff; font-weight: bold;">View Full MIT License Text</summary>
+                <pre style="margin-top: 15px;">
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+                </pre>
+            </details>
+        </div>
+
+        <h2>📬 Contact & Contributions</h2>
+        <p>If you believe any attribution is missing, incorrect, or if you have questions about the licenses used in LectiOra, please contact us at: <strong><span class="support-email"></span></strong></p>
+        <p>We are committed to full compliance with all open-source licenses and intellectual property rights.</p>
+
+        <hr style="margin: 40px 0;">
+
+        <!-- French Section -->
+        <h1>Licences Open Source - LectiOra</h1>
+        <p><strong>Dernière mise à jour :</strong> 30 octobre 2025</p>
+
+        <div class="highlight-box">
+            <h3>Remerciements</h3>
+            <p>LectiOra est construit avec gratitude sur les épaules de la communauté open-source. Cette page liste les bibliothèques tierces, frameworks et services qui rendent notre application possible. Nous sommes profondément reconnaissants envers tous les développeurs et organisations qui contribuent librement leur travail pour faire avancer la technologie et l'innovation.</p>
+        </div>
+
+        <div class="category-header">
+            <h2>📱 Framework Principal & Outils de Développement</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">React Native</div>
+            <div class="license-type">Licence MIT</div>
+            <div class="license-description">
+                Un framework pour créer des applications mobiles natives utilisant React. React Native permet à LectiOra d'offrir une expérience multiplateforme fluide sur iOS et Android.
+            </div>
+            <p><strong>Copyright :</strong> Meta Platforms, Inc. et affiliés</p>
+            <p><strong>Site web :</strong> <a href="https://reactnative.dev" target="_blank">https://reactnative.dev</a></p>
+            <p><strong>Licence :</strong> <a href="https://github.com/facebook/react-native/blob/main/LICENSE" target="_blank">Licence MIT</a></p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Expo</div>
+            <div class="license-type">Licence MIT</div>
+            <div class="license-description">
+                Une plateforme open-source pour créer des applications natives universelles avec React qui fonctionnent sur Android, iOS et le web. Expo fournit l'environnement de développement, le système de build et les API natives essentielles pour LectiOra.
+            </div>
+            <p><strong>Copyright :</strong> 650 Industries, Inc. (Expo)</p>
+            <p><strong>Site web :</strong> <a href="https://expo.dev" target="_blank">https://expo.dev</a></p>
+            <p><strong>Licence :</strong> <a href="https://github.com/expo/expo/blob/main/LICENSE" target="_blank">Licence MIT</a></p>
+        </div>
+
+        <div class="category-header">
+            <h2>☁️ Backend & Services Cloud</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Firebase</div>
+            <div class="license-type">Propriétaire (Google Cloud Platform)</div>
+            <div class="license-description">
+                Firebase fournit l'infrastructure backend pour LectiOra, incluant Firebase Authentication (pour les comptes utilisateur), Cloud Firestore (pour le stockage et la synchronisation des données), Firebase Cloud Functions (pour la logique backend serverless), et Firebase Cloud Messaging (pour les notifications push).
+            </div>
+            <p><strong>Fournisseur :</strong> Google LLC</p>
+            <p><strong>Site web :</strong> <a href="https://firebase.google.com" target="_blank">https://firebase.google.com</a></p>
+            <p><strong>Conditions :</strong> <a href="https://firebase.google.com/terms" target="_blank">Conditions d'utilisation Firebase</a></p>
+            <p><strong>Note :</strong> Le SDK JavaScript Firebase utilisé dans LectiOra est sous Licence Apache 2.0</p>
+        </div>
+
+        <div class="category-header">
+            <h2>💳 Abonnement & Monétisation</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">RevenueCat</div>
+            <div class="license-type">Propriétaire (Service Commercial avec Niveau Gratuit)</div>
+            <div class="license-description">
+                RevenueCat fournit l'infrastructure d'abonnement et les analyses pour le plan Premium de LectiOra. Il gère les achats intégrés, la validation du statut d'abonnement et la synchronisation multiplateforme entre iOS et Android.
+            </div>
+            <p><strong>Fournisseur :</strong> RevenueCat, Inc.</p>
+            <p><strong>Site web :</strong> <a href="https://www.revenuecat.com" target="_blank">https://www.revenuecat.com</a></p>
+            <p><strong>Note :</strong> Le SDK React Native de RevenueCat est open-source sous Licence MIT</p>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Google Play Console</div>
+            <div class="license-type">Propriétaire (Plateforme Google Play Développeur)</div>
+            <div class="license-description">
+                Google Play Console est la plateforme développeur utilisée pour publier, gérer et distribuer LectiOra sur le Google Play Store. Elle gère également le traitement des paiements pour les achats intégrés et abonnements sur Android.
+            </div>
+            <p><strong>Fournisseur :</strong> Google LLC</p>
+            <p><strong>Site web :</strong> <a href="https://play.google.com/console" target="_blank">https://play.google.com/console</a></p>
+        </div>
+
+        <div class="category-header">
+            <h2>📖 Contenu & Données</h2>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Traductions de la Bible</div>
+            <div class="license-type">Diverses Sources du Domaine Public & Sous Licence</div>
+            <div class="license-description">
+                LectiOra donne accès à plusieurs traductions de la Bible dans 7 langues. La plupart des traductions sont dans le domaine public ou utilisées sous permissions de leurs éditeurs respectifs.
+            </div>
+        </div>
+
+        <div class="license-box">
+            <div class="license-name">Catéchisme de l'Église Catholique (CEC)</div>
+            <div class="license-type">Copyright © Libreria Editrice Vaticana</div>
+            <div class="license-description">
+                Le texte complet du Catéchisme de l'Église Catholique est fourni pour un usage non commercial, éducatif et dévotionnel. Le texte officiel est © Libreria Editrice Vaticana.
+            </div>
+            <p><strong>Titulaire du Copyright :</strong> Libreria Editrice Vaticana</p>
+            <p><strong>Site web :</strong> <a href="https://www.vatican.va" target="_blank">https://www.vatican.va</a></p>
+        </div>
+
+        <h2>📬 Contact & Contributions</h2>
+        <p>Si vous pensez qu'une attribution est manquante, incorrecte, ou si vous avez des questions sur les licences utilisées dans LectiOra, veuillez nous contacter à : <strong><span class="support-email"></span></strong></p>
+        <p>Nous nous engageons à respecter pleinement toutes les licences open-source et les droits de propriété intellectuelle.</p>
+    </div>
+</body>
+</html>
